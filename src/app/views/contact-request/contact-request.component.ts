@@ -7,6 +7,7 @@ import { Pagination } from 'src/app/@shared/interface/pagination';
 import { AppointmentService } from 'src/app/services/appointment.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { DeleteDialogComponent } from '../users/delete-confirmation-dialog/delete-dialog.component';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-contact-request',
@@ -152,5 +153,10 @@ export class ContactRequestComponent {
     this.startDate = this.filterComponent.startDate;
     this.endDate = this.filterComponent.toDate;
     this.getCommunities();
+  }
+
+  displayLocalTime(utcDateTime: string): string {
+    const localTime = moment.utc(utcDateTime).local();
+    return localTime.format('hh:mm A');
   }
 }
