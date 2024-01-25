@@ -1,5 +1,5 @@
 <c-card class="app-channels mb-3">
-  <c-card-header>FT Channels</c-card-header>
+  <c-card-header>HealingTube</c-card-header>
   <c-card-body>
     <c-row class="pb-3">
       <app-filter (searchClick)="onSearch()"></app-filter>
@@ -76,7 +76,7 @@
       </tbody>
 
       <h6 *ngIf="!channelList.length" class="text-center p-5 m-0">
-        No Chennel available
+        No Channel available
       </h6>
     </app-table>
     <app-pagination [items]="pagination?.totalItems" (onPageChange)="onPageChange($event)" />

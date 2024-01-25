@@ -1,25 +1,24 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Pagination } from 'src/app/@shared/interface/pagination';
-import { CommunityService } from 'src/app/services/community.service';
-import { DeleteDialogComponent } from '../users/delete-confirmation-dialog/delete-dialog.component';
-import { debounceTime, distinctUntilChanged } from 'rxjs';
-import { FilterComponent } from 'src/app/@shared/components/filter/filter.component';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { FilterComponent } from 'src/app/@shared/components/filter/filter.component';
+import { Pagination } from 'src/app/@shared/interface/pagination';
+import { AppointmentService } from 'src/app/services/appointment.service';
 import { ToastService } from 'src/app/services/toast.service';
+import { DeleteDialogComponent } from '../users/delete-confirmation-dialog/delete-dialog.component';
+import * as moment from 'moment';
 
 @Component({
-  selector: 'app-community',
-  templateUrl: './community.component.html',
-  styleUrls: ['./community.component.scss'],
+  selector: 'app-contact-request',
+  templateUrl: './contact-request.component.html',
+  styleUrls: ['./contact-request.component.scss']
 })
-export class CommunityComponent implements OnInit, AfterViewInit {
+export class ContactRequestComponent {
   @ViewChild(FilterComponent) filterComponent: FilterComponent;
 
   activeTab = 1;
-  communityList: any = [];
+  appointmnetContactList: any = [];
   position = 'top-end';
   visible = false;
   percentage = 0;
@@ -31,23 +30,16 @@ export class CommunityComponent implements OnInit, AfterViewInit {
     perPage: 15,
     totalItems: 0,
   };
-  pageType = 'community'
+  pageType = 'page';
   startDate: any;
   endDate: any;
   constructor(
-    private communityService: CommunityService,
+    private appointmentService: AppointmentService,
     private router: Router,
     private modalService: NgbModal,
     private spinner: NgxSpinnerService,
-    private toaster: ToastService 
-
+    private toaster: ToastService
   ) {
-    // this.searchCtrl = new FormControl('');
-    // this.searchCtrl.valueChanges
-    //   .pipe(distinctUntilChanged(), debounceTime(500))
-    //   .subscribe((val: string) => {
-    //     this.getCommunities();
-    //   });
   }
 
   ngOnInit(): void {
@@ -59,32 +51,31 @@ export class CommunityComponent implements OnInit, AfterViewInit {
 
   getCommunities(): void {
     this.spinner.show();
-    this.communityService
-      ?.getAllCommunity(
+    this.appointmentService
+      ?.getAppointmnets(
         this.pagination.activePage,
         this.pagination.perPage,
         this.searchCtrl,
-        this.pageType,
         this.startDate,
         this.endDate
       )?.subscribe({
         next: (res: any) => {
           this.spinner.hide();
           if (res.data) {
-            this.communityList = res?.data;
+            this.appointmnetContactList = res?.data;
             this.pagination.totalItems = res?.pagination?.totalItems;
             this.pagination.perPage = res?.pagination?.pageSize;
           }
         },
         error: (error) => {
           this.spinner.hide();
+          console.log(error);
         },
       });
   }
 
   changeCommunityStatus(community, status): void {
-    this.spinner.show();
-    this.communityService
+    this.appointmentService
       .changeCommunityStatus(community.Id, community.profileId, status)
       .subscribe({
         next: (res) => {
@@ -101,12 +92,12 @@ export class CommunityComponent implements OnInit, AfterViewInit {
     const modalRef = this.modalService.open(DeleteDialogComponent, {
       centered: true,
     });
-    modalRef.componentInstance.title = 'Health Practitioners';
+    modalRef.componentInstance.title = 'Page';
     modalRef.componentInstance.message =
-      'Are you sure want to delete this Health Practitioners?';
+      'Are you sure want to delete this page?';
     modalRef.result.then((res) => {
       if (res === 'success') {
-        this.communityService.deleteCommunity(Id).subscribe({
+        this.appointmentService.deleteCommunity(Id).subscribe({
           next: (res) => {
             this.toaster.success(res.message);
             modalRef.close();
@@ -121,7 +112,7 @@ export class CommunityComponent implements OnInit, AfterViewInit {
   }
 
   openCommunity(id: any): void {
-    this.router.navigate([`health-practitioners/edit/${id}`]);
+    this.router.navigate([`pages/edit/${id}`]);
   }
 
   createCommunityAdmin(userId, communityId): void {
@@ -131,7 +122,7 @@ export class CommunityComponent implements OnInit, AfterViewInit {
       isActive: 'Y',
       isAdmin: 'Y',
     };
-    this.communityService.createCommunityAdminByMA(data).subscribe({
+    this.appointmentService.createCommunityAdminByMA(data).subscribe({
       next: (res: any) => {
         if (res) {
           return res;
@@ -161,6 +152,11 @@ export class CommunityComponent implements OnInit, AfterViewInit {
     this.searchCtrl = this.filterComponent.searchCtrl.value;
     this.startDate = this.filterComponent.startDate;
     this.endDate = this.filterComponent.toDate;
-    this.getCommunities()
+    this.getCommunities();
+  }
+
+  displayLocalTime(utcDateTime: string): string {
+    const localTime = moment.utc(utcDateTime).local();
+    return localTime.format('hh:mm A');
   }
 }

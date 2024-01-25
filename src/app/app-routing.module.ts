@@ -34,7 +34,7 @@ const routes: Routes = [
       //     import('./views/community-post/community-post.module').then((m) => m.CommunityPostModule),
       // },
       {
-        path: 'community',
+        path: 'health-practitioners',
         loadChildren: () =>
           import('./views/community/community.module').then(
             (m) => m.CommunityModule
@@ -59,6 +59,16 @@ const routes: Routes = [
         path: 'channels',
         loadChildren: () =>
           import('./views/channels/channels.module').then((m) => m.ChannelsModule),
+      },
+      {
+        path: 'payment-info',
+        loadChildren: () =>
+          import('./views/payment-info/payment-info.module').then((m) => m.PaymentInfoModule),
+      },
+      {
+        path: 'contact-request',
+        loadChildren: () =>
+          import('./views/contact-request/contact-request.module').then((m) => m.ContactRequestModule),
       },
     ],
   },

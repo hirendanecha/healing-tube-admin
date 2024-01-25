@@ -16,7 +16,7 @@ export class FilterComponent {
   @Output() searchClick: EventEmitter<void> = new EventEmitter<void>();
 
   constructor(){
-    this.endDate = this.formatDate(new Date());
+    // this.endDate = this.formatDate(new Date());
   }
 
   private formatDate(date: Date): string {

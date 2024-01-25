@@ -12,8 +12,13 @@ export const navItems: INavData[] = [
   },
   {
     name: 'Health Practitioner',
-    url: '/community',
+    url: '/health-practitioners',
     iconComponent: { name: 'cil-bookmark' },
+  },
+  {
+    name: 'Contact Request',
+    url: '/contact-request',
+    iconComponent: { name: 'cil-contact' },
   },
   {
     name: 'Healing Topics',
@@ -41,8 +46,13 @@ export const navItems: INavData[] = [
     iconComponent: { name: 'cil-https' },
   },
   {
-    name: 'FT Channels',
+    name: 'HealingTube',
     url: '/channels',
     iconComponent: { name: 'cil-screen-desktop' },
+  },
+  {
+    name: 'Payment Info',
+    url: '/payment-info',
+    iconComponent: { name: 'cil-money' },
   },
 ];
