@@ -6,5 +6,4 @@ export const environment = {
   socketUrl: 'https://api.healing.tube/',
   socketUrl2: 'http://localhost:8080/',
   imgUrl: 'root/storage/uploads',
-
 };
