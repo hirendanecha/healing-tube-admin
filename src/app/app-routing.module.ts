@@ -80,6 +80,12 @@ const routes: Routes = [
           import('./views/contact-request/contact-request.module').then((m) => m.ContactRequestModule),
           canActivate: mapToCanActivate([AuthenticationGuard])
       },
+      {
+        path: 'report-bugs',
+        loadChildren: () =>
+          import('./views/setting/setting.module').then((m) => m.SettingModule),
+        canActivate: mapToCanActivate([AuthenticationGuard])
+      },
     ],
   },
   {

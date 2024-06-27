@@ -55,4 +55,9 @@ export const navItems: INavData[] = [
     url: '/payment-info',
     iconComponent: { name: 'cil-money' },
   },
+  {
+    name: 'Support ticket page',
+    url: '/report-bugs',
+    iconComponent: { name: 'cil-list' },
+  },
 ];
