@@ -23,7 +23,6 @@ export class EditChannelComponent implements OnInit, AfterViewInit {
   memberDetails: any = {};
   selectedItems = [];
   selectedusers = [];
-
   communityId: any;
   channelId: any;
   isPage = false;
@@ -31,18 +30,15 @@ export class EditChannelComponent implements OnInit, AfterViewInit {
   userNameSearch = '';
   userList = [];
   users: any;
-  channelImg: any = {
-    file: null,
-    url: '',
-  };
-  profileImg: any = {
-    file: null,
-    url: '',
-  };
 
   adminList: any;
 
   isEdit = false;
+  selectedFile: any;
+  channelImg: any = {
+    file: null,
+    url: '',
+  };
 
   constructor(
     private channelService: ChannelService,
@@ -62,7 +58,16 @@ export class EditChannelComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.getUserList();
   }
-  
+
+  onFileSelected(event: any) {
+    this.channelImg.file = event.target?.files?.[0];
+    this.selectedFile = URL.createObjectURL(event.target.files[0]);
+  }
+
+  removePostSelectedFile(): void {
+    this.selectedFile = null;
+  }
+
   upload() {
     if (this.channelImg.file) {
       this.spinner.show();
@@ -133,23 +138,37 @@ export class EditChannelComponent implements OnInit, AfterViewInit {
     );
   }
 
+  onChangeTag(event: any) {
+    if (!this.isEdit) {
+      this.isEdit = true;
+    }
+    this.channelDetails.Username = event.target.value
+      .replace(/\s+/g, '')
+      .replace(/,+/g, ',');
+  }
+
   saveChanges(): void {
     const id = this.channelDetails.id;
     const upadtedChannelData = {
       profileid: this.channelDetails.profileid,
       profile_pic_name: this.channelDetails.profile_pic_name,
       firstname: this.channelDetails.firstname,
+      Username: this.channelDetails.Username,
       unique_link: this.channelDetails.unique_link,
       feature: this.channelDetails.feature,
     };
     this.channelService.editChannal(id, upadtedChannelData).subscribe({
       next: (res: any) => {
-        this.getUserDetails();
-        if (this.isEdit) {
-          this.isEdit = false;
+        if (res) {
+          this.getUserDetails();
+          this.removePostSelectedFile();
+          if (this.isEdit) {
+            this.isEdit = false;
+          }
         }
       },
     });
+
     if (this.selectedItems.length) {
       this.selectedItems.forEach((e) => {
         this.createAdmin(e);
@@ -202,9 +221,12 @@ export class EditChannelComponent implements OnInit, AfterViewInit {
   onChangeData(): void {
     this.isEdit = true;
   }
-  resetSelect(event){
+
+  resetSelect(event) {
     if (event?.value?.Id) {
-      this.selectedItems = this.selectedItems.filter(item => item !== event.value.Id);
+      this.selectedItems = this.selectedItems.filter(
+        (item) => item !== event.value.Id
+      );
     } else {
       this.selectedItems = [];
     }
