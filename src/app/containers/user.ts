@@ -11,7 +11,7 @@ export class User {
   IsAdmin: string;
   LastName: string;
   State: string;
-  userName: string;
+  Username: string;
   Zip: string;
   profileId: string;
   IsSuspended: string;

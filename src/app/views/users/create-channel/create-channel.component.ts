@@ -40,7 +40,6 @@ export class CreateChannelComponent {
     private userService: UserService,
     public toastService: ToastService,
     public activateModal: NgbActiveModal,
-    // private channelService: ChannelService
     private channelService: ChannelService,
     private router: Router
   ) { }
@@ -50,11 +49,11 @@ export class CreateChannelComponent {
   slugify = (str: string) => {
     return str?.length > 0
       ? str
-        .toLowerCase()
-        .trim()
-        .replace(/[^\w\s-]/g, '')
-        .replace(/[\s_-]+/g, '-')
-        .replace(/^-+|-+$/g, '')
+          .toLowerCase()
+          .trim()
+          .replace(/[^\w\s-]/g, '')
+          .replace(/[\s_-]+/g, '-')
+          .replace(/^-+|-+$/g, '')
       : '';
   };
 
