@@ -134,6 +134,8 @@ export class ChannelsComponent {
   }
 
   openChannel(id: any): void {
+    console.log("test", id);
+
     this.router.navigate([`channels/edit/${id}`]);
   }
 

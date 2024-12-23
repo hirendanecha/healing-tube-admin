@@ -11,6 +11,11 @@ export const navItems: INavData[] = [
     // }
   },
   {
+    name: 'News Feed',
+    url: '/newsfeed',
+    iconComponent: { name: 'cil-notes' },
+  },
+  {
     name: 'Health Practitioner',
     url: '/health-practitioners',
     iconComponent: { name: 'cil-bookmark' },
@@ -24,6 +29,11 @@ export const navItems: INavData[] = [
     name: 'Healing Topics',
     url: '/pages',
     iconComponent: { name: 'cil-layers' },
+  },
+  {
+    name: 'Research',
+    url: '/research',
+    iconComponent: { name: 'cil-control' },
   },
   // {
   //   name: 'Post List',
@@ -59,5 +69,10 @@ export const navItems: INavData[] = [
     name: 'Support ticket page',
     url: '/report-bugs',
     iconComponent: { name: 'cil-list' },
+  },
+  {
+    name: 'Advertisement page',
+    url: '/advertisements',
+    iconComponent: { name: 'cil-playlist-add' },
   },
 ];

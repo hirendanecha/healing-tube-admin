@@ -7,12 +7,12 @@ import { Pagination } from 'src/app/@shared/interface/pagination';
 import { AppointmentService } from 'src/app/services/appointment.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { DeleteDialogComponent } from '../users/delete-confirmation-dialog/delete-dialog.component';
-import * as moment from 'moment';
+import moment from 'moment';
 
 @Component({
   selector: 'app-contact-request',
   templateUrl: './contact-request.component.html',
-  styleUrls: ['./contact-request.component.scss']
+  styleUrls: ['./contact-request.component.scss'],
 })
 export class ContactRequestComponent {
   @ViewChild(FilterComponent) filterComponent: FilterComponent;
@@ -39,12 +39,9 @@ export class ContactRequestComponent {
     private modalService: NgbModal,
     private spinner: NgxSpinnerService,
     private toaster: ToastService
-  ) {
-  }
+  ) {}
 
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void {}
   ngAfterViewInit(): void {
     this.getCommunities();
   }
@@ -58,7 +55,8 @@ export class ContactRequestComponent {
         this.searchCtrl,
         this.startDate,
         this.endDate
-      )?.subscribe({
+      )
+      ?.subscribe({
         next: (res: any) => {
           this.spinner.hide();
           if (res.data) {

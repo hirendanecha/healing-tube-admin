@@ -1,4 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
+import moment from 'moment';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -7,7 +8,6 @@ import { Pagination } from 'src/app/@shared/interface/pagination';
 import { AppointmentService } from 'src/app/services/appointment.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { DeleteDialogComponent } from '../users/delete-confirmation-dialog/delete-dialog.component';
-import * as moment from 'moment';
 
 @Component({
   selector: 'app-payment-info',
